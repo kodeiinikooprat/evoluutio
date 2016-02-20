@@ -16,11 +16,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> My Blog</a>
+                    <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home">Home</span> </a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/article/create"><span class="glyphicon glyphicon-pencil"> WriteArticle</a></li>
+                        <li class="active"><a href="/nextturn"><span class="glyphicon glyphicon-pencil">NextTurn</a></li>
                     </ul>
                 </div>
             </div>

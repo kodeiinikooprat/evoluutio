@@ -34,7 +34,8 @@ public class WorldMongoDao<T extends World> implements WorldDbService<T> {
         // MongoDB is a document store which by default has no concept of a schema so its
         // entirely up to the developer to decide which attributes a document will use
         BasicDBObject doc = new BasicDBObject("title", entity.getTitle()).
-                append("id", entity.getId());
+                append("id", entity.getId()).
+                append("turn", entity.getTurn());
 //                append("content", entity.getContent()).
 //                append("summary", entity.getSummary()).
 //                append("deleted", false).
@@ -70,7 +71,8 @@ public class WorldMongoDao<T extends World> implements WorldDbService<T> {
                 BasicDBObject doc = (BasicDBObject) cursor.next();
                 World entity = new World(
                         doc.getInt("id"),
-                        doc.getString("title")
+                        doc.getString("title"),
+                        doc.getInt("turn")
                 //                        doc.getString("summary"),
                 //                        doc.getString("content"),
 
@@ -108,9 +110,10 @@ public class WorldMongoDao<T extends World> implements WorldDbService<T> {
 //                doc.put("content", content);
 
                 collection.save(doc);
-
+                System.out.println("update toimi!");
                 return true;
             } else {
+                System.out.println("update kusi!");
                 return false;
             }
         } finally {

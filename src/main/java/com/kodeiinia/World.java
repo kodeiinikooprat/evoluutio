@@ -15,15 +15,15 @@ public class World {
     private int turn;
     private String title;
     
-    public World(Integer id, String title) {
+    public World(Integer id, String title, Integer turn) {
         this.id = id;
-        this.turn = 0;
+        this.turn = turn;
         this.title = title;
     }
 
     public void increaseTurn() {
         this.turn++;
-
+        //return this.turn;
     }
 
     public int getId() {
