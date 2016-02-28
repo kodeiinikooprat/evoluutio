@@ -1,5 +1,5 @@
 
-package com.kodeiinia;
+package com.kodeiinia.gamelogic;
 
 import java.util.ArrayList;
 

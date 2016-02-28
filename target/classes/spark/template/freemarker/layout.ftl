@@ -1,3 +1,5 @@
+<#ftl strip_whitespace = true>
+
 <html>
     <head>
         <title>Freemarker</title>

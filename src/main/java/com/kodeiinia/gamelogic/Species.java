@@ -1,9 +1,7 @@
 package com.kodeiinia.gamelogic;
 
-/**
- *
- * @author ville
- */
+
+
 public class Species {
 
     private int id;

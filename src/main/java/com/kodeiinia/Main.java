@@ -1,28 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kodeiinia;
 
-import static com.kodeiinia.HelloSpark.articleDbService;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
+import com.kodeiinia.gamelogic.World;
+import com.kodeiinia.gamelogic.WorldMongoDao;
+import com.kodeiinia.gamelogic.WorldDbService;
+import com.kodeiinia.admin.AdminRoutes;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Route;
 import static spark.Spark.get;
-import static spark.Spark.post;
 import spark.template.freemarker.FreeMarkerRoute;
 
-/**
- *
- * @author Sony
- */
+
 public class Main {
 
     public static WorldDbService<World> worldDbService = new WorldMongoDao();
@@ -92,6 +82,8 @@ public class Main {
             }
         });
 
+        AdminRoutes adminRoutes = new AdminRoutes();
+        
     }
 
 }

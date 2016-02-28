@@ -1,9 +1,7 @@
-
 package com.kodeiinia.users;
 
 /**
  *
- * @author ville
  * @param <T>
  */
 public interface UserDbService<T> {
