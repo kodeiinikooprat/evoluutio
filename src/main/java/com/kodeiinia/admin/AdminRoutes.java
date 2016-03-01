@@ -12,6 +12,7 @@ import spark.template.freemarker.FreeMarkerRoute;
 public class AdminRoutes {
 
     String basepath = "/admin";
+    
 
     public AdminRoutes() {
         setupEndpoints();
