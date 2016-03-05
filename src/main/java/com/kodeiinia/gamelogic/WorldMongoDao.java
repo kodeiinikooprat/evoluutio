@@ -13,7 +13,23 @@ import java.util.ArrayList;
 public class WorldMongoDao<T extends World> implements WorldDbService<T> {
 
     private DBCollection collection;
+    private DB db;
 
+        public WorldMongoDao(DB db) {
+
+        try {
+            // Connect to MongoDB using the default port on your local machine
+//            MongoClient mongoClient = new MongoClient("localhost");
+            // Note that the sparkledb will not actually be created until we save a document
+            this.db = db;
+            collection = db.getCollection("Worlds");
+
+//            System.out.println("Connecting to MongoDB@" + mongoClient.getAllAddress());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public WorldMongoDao() {
 
         try {
