@@ -23,6 +23,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/nextturn"><span class="glyphicon glyphicon-pencil">NextTurn</a></li>
+                        <li class="active"><a href="/admin"><span class="glyphicon glyphicon-wrench">Admin</a></li>
                         </ul>
                     </div>
                 </div>

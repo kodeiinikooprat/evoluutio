@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kodeiinia;
 
 import static com.kodeiinia.Main.worldDbService;
@@ -15,10 +10,7 @@ import spark.Response;
 import static spark.Spark.get;
 import spark.template.freemarker.FreeMarkerRoute;
 
-/**
- *
- * @author ville
- */
+
 public class SiteRoutes {
 
     public SiteRoutes() {

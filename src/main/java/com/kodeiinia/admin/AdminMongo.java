@@ -16,10 +16,8 @@ public class AdminMongo {
     public AdminMongo(DB db) {
         try {
             this.db = db;
-//            System.out.println(this.db.getCollectionNames());
             this.allCollectionNames = this.db.getCollectionNames();
             this.numberOfCollections = allCollectionNames.size();
-//            System.out.println("Connecting to MongoDB@" + db.mongoClient.getAllAddress());
             System.out.println("DB name is: " + this.db.getName());
             System.out.println("Mongo instance is: " + this.db.getMongo());
             System.out.println("Collections: " + this.allCollectionNames);

@@ -48,6 +48,7 @@ public class AdminRoutes {
                 
                 Map<String, Object> viewObjects = new HashMap<>();
                 viewObjects.put("resetButtonLink", getLink(resetDbPath));
+                viewObjects.put("resetButtonText", getName(resetDbPath));
                 viewObjects.put("templateName", "adminBase.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
@@ -62,8 +63,8 @@ public class AdminRoutes {
                 adminMongo.clearDb();
 
                 Map<String, Object> viewObjects = new HashMap();
-                String testmessage1 = "Tän pitäs toimia.";
-                viewObjects.put("message", testmessage1);
+                String message = "Database has been reset! (possibly)";
+                viewObjects.put("message", message);
                 viewObjects.put("templateName", "adminMessage.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }

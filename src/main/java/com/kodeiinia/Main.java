@@ -5,15 +5,14 @@ import com.kodeiinia.gamelogic.WorldMongoDao;
 import com.kodeiinia.gamelogic.WorldDbService;
 import com.kodeiinia.admin.AdminRoutes;
 import com.mongodb.MongoClient;
-import java.util.HashMap;
-import java.util.Map;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import static spark.Spark.get;
-import spark.template.freemarker.FreeMarkerRoute;
+//import java.util.HashMap;
+//import java.util.Map;
+//import spark.ModelAndView;
+//import spark.Request;
+//import spark.Response;
+//import static spark.Spark.get;
+//import spark.template.freemarker.FreeMarkerRoute;
 import com.mongodb.DB;
-//import com.mongodb.MongoDatabase;
 
 public class Main {
 
@@ -37,8 +36,6 @@ public class Main {
             MongoClient mongoClient = new MongoClient("localhost");
             DB db = mongoClient.getDB("evolutiondb");
             System.out.println("Connecting to MongoDB@" + mongoClient.getAllAddress());
-            
-//            System.out.println(db.getCollectionNames());
             return db;
         } catch (Exception e) {
             System.out.println(e.getMessage());
