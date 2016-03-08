@@ -10,7 +10,6 @@ import spark.Response;
 import static spark.Spark.get;
 import spark.template.freemarker.FreeMarkerRoute;
 
-
 public class SiteRoutes {
 
     public SiteRoutes() {
@@ -18,15 +17,19 @@ public class SiteRoutes {
     }
 
     private void setupEndpoints() {
-                get(new FreeMarkerRoute("/") {
+        get(new FreeMarkerRoute("/") {
             @Override
             public ModelAndView handle(Request request, Response response) {
                 Map<String, Object> viewObjects = new HashMap();
                 World world = worldDbService.readOne(1);
-                viewObjects.put("world", world);
+
+                if (world != null) {
+                    viewObjects.put("world", world);
+                } else {
+                    viewObjects.put("noWorlds", "No worlds present in database!");
+                }
 
                 viewObjects.put("templateName", "world.ftl");
-
                 return modelAndView(viewObjects, "layout.ftl");
             }
         });
@@ -55,7 +58,7 @@ public class SiteRoutes {
 
 //                System.out.println("WUORO O " + turn);
                 worldDbService.update(world.getId(), turn);
-                
+
                 viewObjects.put("world", world);
 
                 viewObjects.put("templateName", "world.ftl");
@@ -65,6 +68,5 @@ public class SiteRoutes {
             }
         });
     }
-    
-    
+
 }
