@@ -1,5 +1,6 @@
 package com.kodeiinia.database;
 
+import com.kodeiinia.gamelogic.World;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
@@ -10,12 +11,15 @@ public class AdminMongoDao {
     private DB db;
     private Set<String> allCollectionNames;
     private int numberOfCollections;
+    private WorldDbService<World> worldDbService;
 
+//    private DBCollection worldCollection;
     public AdminMongoDao(DB db) {
         try {
             this.db = db;
             this.allCollectionNames = this.db.getCollectionNames();
             this.numberOfCollections = allCollectionNames.size();
+            this.worldDbService = new WorldMongoDao<>(this.db);
             System.out.println("DB name is: " + this.db.getName());
             System.out.println("Mongo instance is: " + this.db.getMongo());
             System.out.println("Collections: " + this.allCollectionNames);
@@ -51,6 +55,14 @@ public class AdminMongoDao {
         return numberOfCollections;
     }
 
+    public boolean collectionExists(String collectionName) {
+        if (db.collectionExists(collectionName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public DB getDb() {
         return db;
     }
@@ -76,6 +88,17 @@ public class AdminMongoDao {
             return false;
         }
 
+    }
+
+    public boolean createTestData() {
+        if (this.collectionExists("Worlds")) {
+            System.out.println("Collection \"Worlds\" already exists!");
+            return false;
+        } else {
+            World world = new World(1, "Maa", 0);
+            worldDbService.create(world);
+            return true;
+        }
     }
 
 }

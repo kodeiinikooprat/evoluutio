@@ -15,21 +15,22 @@ import spark.template.freemarker.FreeMarkerRoute;
 public class AdminController {
 
 //    private DB evoluutioDb;
-    
     private static AdminMongoDao adminMongo;
-    
+
     private String[] basePath = new String[2];
     private String[] resetDbPath = new String[2];
-
+    private String[] createTestDataPath = new String[2];
 
     public AdminController(DB Db) {
 //        evoluutioDb = Db;
         adminMongo = new AdminMongoDao(Db);
-        
+
         basePath[0] = "/admin";
         basePath[1] = "Admin Home";
         resetDbPath[0] = basePath[0] + "/resetdb";
-        resetDbPath[1] = "Reset Database";
+        resetDbPath[1] = "Reset database";
+        createTestDataPath[0] = basePath[0] + "/createtestdata";
+        createTestDataPath[1] = "Create testdata";
         setupEndpoints();
     }
 
@@ -38,36 +39,38 @@ public class AdminController {
 //        String name = path[1];
         return link;
     }
-    
+
     private String getName(String[] path) {
         String name = path[1];
         return name;
     }
-    
+
     private void setupEndpoints() {
 
         get(new FreeMarkerRoute(basePath[0]) {
 
             @Override
             public ModelAndView handle(Request request, Response response) {
-                
+
                 System.out.println(adminMongo.getDb().getName());
                 System.out.println(adminMongo.getAllCollectionNames());
-                
+
                 Map<String, Object> viewObjects = new HashMap<>();
                 viewObjects.put("resetButtonLink", getLink(resetDbPath));
                 viewObjects.put("resetButtonText", getName(resetDbPath));
+                viewObjects.put("testdataButtonLink", getLink(createTestDataPath));
+                viewObjects.put("testdataButtonText", getName(createTestDataPath));
                 viewObjects.put("templateName", "adminBase.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
 
         });
-        
+
         get(new FreeMarkerRoute(resetDbPath[0]) {
 
             @Override
             public ModelAndView handle(Request request, Response response) {
-                
+
                 adminMongo.clearDb();
 
                 Map<String, Object> viewObjects = new HashMap();
@@ -76,6 +79,26 @@ public class AdminController {
                 viewObjects.put("templateName", "adminMessage.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
+        });
+
+        get(new FreeMarkerRoute(createTestDataPath[0]) {
+
+            @Override
+            public ModelAndView handle(Request request, Response response) {
+
+                boolean success = adminMongo.createTestData();
+                Map<String, Object> viewObjects = new HashMap();
+
+                String message = "Failed to create testdata";
+                if (success) {
+                    message = "Testdata created.";
+                }
+
+                viewObjects.put("message", message);
+                viewObjects.put("templateName", "adminMessage.ftl");
+                return modelAndView(viewObjects, "layout.ftl");
+            }
+
         });
 
     }

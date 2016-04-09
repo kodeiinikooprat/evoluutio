@@ -39,20 +39,6 @@ public class EvolutionController {
             }
         });
 
-        get(new FreeMarkerRoute("/world/create") {
-            @Override
-            public Object handle(Request request, Response response) {
-                Map<String, Object> viewObjects = new HashMap();
-                World world = new World(1, "Maa", 0);
-                worldDbService.create(world);
-                viewObjects.put("world", world);
-
-                viewObjects.put("templateName", "world.ftl");
-
-                return modelAndView(viewObjects, "layout.ftl");
-            }
-        });
-
         get(new FreeMarkerRoute("/nextturn") {
             @Override
             public ModelAndView handle(Request request, Response response) {
