@@ -1,5 +1,7 @@
 package com.kodeiinia.admin;
 
+import com.kodeiinia.database.AdminMongoDao;
+import com.mongodb.DB;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -8,16 +10,22 @@ import spark.Response;
 //import spark.Route;
 import static spark.Spark.get;
 import spark.template.freemarker.FreeMarkerRoute;
-import static com.kodeiinia.Main.evoluutioDb;
+//import static com.kodeiinia.Main.evoluutioDb;
 
-public class AdminRoutes {
+public class AdminController {
 
+//    private DB evoluutioDb;
+    
+    private static AdminMongoDao adminMongo;
+    
     private String[] basePath = new String[2];
     private String[] resetDbPath = new String[2];
-    
-    public static AdminMongo adminMongo = new AdminMongo(evoluutioDb);
 
-    public AdminRoutes() {
+
+    public AdminController(DB Db) {
+//        evoluutioDb = Db;
+        adminMongo = new AdminMongoDao(Db);
+        
         basePath[0] = "/admin";
         basePath[1] = "Admin Home";
         resetDbPath[0] = basePath[0] + "/resetdb";

@@ -1,4 +1,4 @@
-package com.kodeiinia.users;
+package com.kodeiinia.database;
 
 /**
  *

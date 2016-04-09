@@ -1,15 +1,14 @@
-
-package com.kodeiinia.gamelogic;
+package com.kodeiinia.database;
 
 import java.util.ArrayList;
 
-public interface WorldDbService<T> {
+public interface SpeciesDbService<T> {
 
     public Boolean create(T entity);
 
     public T readOne(int id);
 
-    public Boolean update(int id, int turn);
+    public Boolean update(int id, String name, int number);
 
     public Boolean delete(int id);
 }

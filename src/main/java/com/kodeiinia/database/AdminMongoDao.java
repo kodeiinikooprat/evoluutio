@@ -1,19 +1,17 @@
-package com.kodeiinia.admin;
+package com.kodeiinia.database;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-//import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import java.util.Set;
 
-public class AdminMongo {
+public class AdminMongoDao {
 
     private DB db;
-//    private DBCollection collection;
     private Set<String> allCollectionNames;
     private int numberOfCollections;
 
-    public AdminMongo(DB db) {
+    public AdminMongoDao(DB db) {
         try {
             this.db = db;
             this.allCollectionNames = this.db.getCollectionNames();
@@ -28,7 +26,7 @@ public class AdminMongo {
         }
     }
 
-    public AdminMongo() {
+    public AdminMongoDao() {
 
         try {
             // Connect to MongoDB using the default port on your local machine
@@ -57,14 +55,19 @@ public class AdminMongo {
         return db;
     }
 
-    
-    
     public boolean clearDb() {
         try {
             for (String colName : this.allCollectionNames) {
                 DBCollection collection = this.db.getCollection(colName);
-                collection.drop();
-                System.out.println("Collection " + colName + " dropped!");
+                String collectionName = collection.getName();
+                System.out.println("collection name to be dropped: "
+                        + collectionName);
+                if (!collectionName.equals("system.indexes")) {
+                    collection.drop();
+                    System.out.println("Collection " + colName + " dropped!");
+                } else {
+                    System.out.println("We don't want to drop system.indexes!");
+                }
             }
 
             return true;

@@ -1,7 +1,9 @@
 package com.kodeiinia;
 
-import static com.kodeiinia.Main.worldDbService;
 import com.kodeiinia.gamelogic.World;
+import com.kodeiinia.database.WorldDbService;
+import com.kodeiinia.database.WorldMongoDao;
+import com.mongodb.DB;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -10,9 +12,12 @@ import spark.Response;
 import static spark.Spark.get;
 import spark.template.freemarker.FreeMarkerRoute;
 
-public class SiteRoutes {
+public class EvolutionController {
 
-    public SiteRoutes() {
+    private WorldDbService<World> worldDbService;
+
+    public EvolutionController(DB Db) {
+        worldDbService = new WorldMongoDao(Db);
         setupEndpoints();
     }
 
