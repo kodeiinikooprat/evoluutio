@@ -56,7 +56,7 @@ public class AdminMongoDao {
     }
 
     public boolean collectionExists(String collectionName) {
-        if (db.collectionExists(collectionName)) {
+        if (this.db.collectionExists(collectionName)) {
             return true;
         } else {
             return false;
@@ -64,24 +64,12 @@ public class AdminMongoDao {
     }
 
     public DB getDb() {
-        return db;
+        return this.db;
     }
 
     public boolean clearDb() {
         try {
-            for (String colName : this.allCollectionNames) {
-                DBCollection collection = this.db.getCollection(colName);
-                String collectionName = collection.getName();
-                System.out.println("collection name to be dropped: "
-                        + collectionName);
-                if (!collectionName.equals("system.indexes")) {
-                    collection.drop();
-                    System.out.println("Collection " + colName + " dropped!");
-                } else {
-                    System.out.println("We don't want to drop system.indexes!");
-                }
-            }
-
+            this.db.dropDatabase();
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -96,7 +84,7 @@ public class AdminMongoDao {
             return false;
         } else {
             World world = new World(1, "Maa", 0);
-            worldDbService.create(world);
+            this.worldDbService.create(world);
             return true;
         }
     }
