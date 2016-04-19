@@ -9,11 +9,11 @@ import com.mongodb.DBCursor;
 public class WorldMongoDao<T extends World> implements WorldDbService<T> {
 
     private DBCollection collection;
-    private DB db;
+//    private DB db;
 
     public WorldMongoDao(DB db) {
         try {
-            this.db = db;
+//            this.db = db;
             collection = db.getCollection("Worlds");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -24,9 +24,11 @@ public class WorldMongoDao<T extends World> implements WorldDbService<T> {
     public Boolean create(T entity) {
         // MongoDB is a document store which by default has no concept of a schema so its
         // entirely up to the developer to decide which attributes a document will use
-        BasicDBObject doc = new BasicDBObject("title", entity.getTitle()).
+        BasicDBObject doc = new BasicDBObject(
+                       "title", entity.getTitle()).
                 append("id", entity.getId()).
-                append("turn", entity.getTurn());
+                append("turn", entity.getTurn()).
+                append("size", entity.getSize());
 
         // As soon as we insert a doucment into our collection MongoDB will craete our sparkle database and
         // World collection within it.

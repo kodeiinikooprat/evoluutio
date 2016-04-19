@@ -14,11 +14,13 @@ public class World {
     private Integer id;
     private int turn;
     private String title;
+    private int size;
     
     public World(Integer id, String title, Integer turn) {
         this.id = id;
         this.turn = turn;
         this.title = title;
+        this.size = 100;
     }
 
     public void increaseTurn() {
@@ -39,8 +41,10 @@ public class World {
     public String getTitle() {
         return this.title;
     }
-    
-    
+
+    public int getSize() {
+        return size;
+    }
     
     public String toString () {
         return "current turn " + this.turn;

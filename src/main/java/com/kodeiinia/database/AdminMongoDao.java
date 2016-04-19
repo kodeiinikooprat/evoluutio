@@ -1,5 +1,6 @@
 package com.kodeiinia.database;
 
+import com.kodeiinia.gamelogic.Species;
 import com.kodeiinia.gamelogic.World;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -12,6 +13,7 @@ public class AdminMongoDao {
     private Set<String> allCollectionNames;
     private int numberOfCollections;
     private WorldDbService<World> worldDbService;
+    private SpeciesDbService<Species> speciesDbService;
 
 //    private DBCollection worldCollection;
     public AdminMongoDao(DB db) {
@@ -20,6 +22,7 @@ public class AdminMongoDao {
             this.allCollectionNames = this.db.getCollectionNames();
             this.numberOfCollections = allCollectionNames.size();
             this.worldDbService = new WorldMongoDao<>(this.db);
+            this.speciesDbService = new SpeciesMongoDao<>(this.db);
             System.out.println("DB name is: " + this.db.getName());
             System.out.println("Mongo instance is: " + this.db.getMongo());
             System.out.println("Collections: " + this.allCollectionNames);
@@ -85,6 +88,8 @@ public class AdminMongoDao {
         } else {
             World world = new World(1, "Maa", 0);
             this.worldDbService.create(world);
+            Species species = new Species(1, "Hamsteri", 2, world.getId());
+            this.speciesDbService.create(species);
             return true;
         }
     }

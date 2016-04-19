@@ -15,17 +15,13 @@ import com.mongodb.MongoClient;
 public class SpeciesMongoDao<T extends Species> implements SpeciesDbService<T> {
 
     private DBCollection collection;
+//    private DB db;
 
-    public SpeciesMongoDao() {
+    public SpeciesMongoDao(DB db) {
 
         try {
-            // Connect to MongoDB using the default port on your local machine
-            MongoClient mongoClient = new MongoClient("localhost");
-            // Note that the sparkledb will not actually be created until we save a document
-            DB db = mongoClient.getDB("evolutiondb");
+//            this.db = db;
             collection = db.getCollection("Species");
-
-            System.out.println("Connecting to MongoDB@" + mongoClient.getAllAddress());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -34,11 +30,12 @@ public class SpeciesMongoDao<T extends Species> implements SpeciesDbService<T> {
     @Override
     public Boolean create(T entity) {
 
-        BasicDBObject doc = new BasicDBObject("title", entity.getName()).
-                append("id", entity.getId()).
+        BasicDBObject doc = new BasicDBObject(
+                       "id", entity.getId()).
                 append("name", entity.getName()).
-                append("number", entity.getNumberOfAnimals());
-
+                append("number", entity.getNumberOfAnimals()).
+                append("worldref", entity.getWorldRef());
+        
         collection.insert(doc);
 
         return true;
@@ -58,7 +55,8 @@ public class SpeciesMongoDao<T extends Species> implements SpeciesDbService<T> {
                 Species entity = new Species(
                         doc.getInt("id"),
                         doc.getString("name"),
-                        doc.getInt("number")
+                        doc.getInt("number"),
+                        doc.getInt("worldref")
                 );
 
                 return (T) entity;
