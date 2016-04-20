@@ -47,6 +47,7 @@ public class EvolutionController {
                     viewObjects.put("noSpecies", "No species present in database!");
                 }
                 
+                viewObjects.put("sidebar", "sidebar.ftl");
                 viewObjects.put("templateName", "world.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
@@ -72,6 +73,7 @@ public class EvolutionController {
                 viewObjects.put("world", world);
                 viewObjects.put("species", species);
 
+                viewObjects.put("sidebar", "sidebar.ftl");
                 viewObjects.put("templateName", "world.ftl");
 
                 return modelAndView(viewObjects, "layout.ftl");
