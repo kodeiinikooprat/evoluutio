@@ -88,8 +88,8 @@ public class AdminMongoDao {
         } else {
             World world = new World(1, "Maa", 0);
             this.worldDbService.create(world);
-            Species species = new Species(1, "Hamsteri", 2, world.getId());
-            this.speciesDbService.create(species);
+//            Species species = new Species(1, "Hamsteri", 2, world.getId());
+//            this.speciesDbService.create(species);
             return true;
         }
     }

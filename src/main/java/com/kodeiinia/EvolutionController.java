@@ -12,7 +12,9 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Route;
 import static spark.Spark.get;
+import static spark.Spark.post;
 import spark.template.freemarker.FreeMarkerRoute;
 
 public class EvolutionController {
@@ -39,16 +41,16 @@ public class EvolutionController {
                 } else {
                     viewObjects.put("noWorlds", "No worlds present in database!");
                 }
-                
+
                 Species species = speciesDbService.readOne(1);
                 if (species != null) {
                     viewObjects.put("species", species);
                 } else {
                     viewObjects.put("noSpecies", "No species present in database!");
                 }
-                
-                viewObjects.put("sidebar", "sidebar.ftl");
-                viewObjects.put("templateName", "world.ftl");
+
+                viewObjects.put("sidebar", "sidebar_speciesCreator.ftl");
+                viewObjects.put("primary", "world.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
         });
@@ -65,19 +67,36 @@ public class EvolutionController {
                 int newAmount = species.getNumberOfAnimals();
 
                 worldDbService.update(world.getId(),
-                                      turn);
+                        turn);
+
                 speciesDbService.update(species.getId(),
-                                        species.getName(),
-                                        newAmount);
-                
+                        species.getName(),
+                        newAmount);
+
                 viewObjects.put("world", world);
                 viewObjects.put("species", species);
 
-                viewObjects.put("sidebar", "sidebar.ftl");
-                viewObjects.put("templateName", "world.ftl");
+                viewObjects.put("sidebar", "sidebar_speciesCreator.ftl");
+                viewObjects.put("primary", "world.ftl");
 
                 return modelAndView(viewObjects, "layout.ftl");
 
+            }
+        });
+
+        post(new Route("/species/create") {
+            @Override
+            public Object handle(Request request, Response response) {
+                int id = speciesDbService.getNextId();
+                System.out.println("species id: " + id);
+                String name = request.queryParams("species-name");
+                int numberOfAnimals = 2;
+                int worldRef = 1;
+                Species species = new Species(id, name, numberOfAnimals, worldRef);
+                speciesDbService.create(species);
+                response.status(201);
+                response.redirect("/");
+                return "";
             }
         });
     }

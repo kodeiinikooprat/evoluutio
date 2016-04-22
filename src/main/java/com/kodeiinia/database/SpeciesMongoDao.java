@@ -6,21 +6,20 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
+import static java.lang.Math.toIntExact;
+import java.util.ArrayList;
 
 /**
  *
  * @param <T>
  */
-
 public class SpeciesMongoDao<T extends Species> implements SpeciesDbService<T> {
 
     private DBCollection collection;
-//    private DB db;
 
     public SpeciesMongoDao(DB db) {
 
         try {
-//            this.db = db;
             collection = db.getCollection("Species");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -31,11 +30,11 @@ public class SpeciesMongoDao<T extends Species> implements SpeciesDbService<T> {
     public Boolean create(T entity) {
 
         BasicDBObject doc = new BasicDBObject(
-                       "id", entity.getId()).
-                append("name", entity.getName()).
-                append("number", entity.getNumberOfAnimals()).
-                append("worldref", entity.getWorldRef());
-        
+                "id", entity.getId())
+                .append("name", entity.getName())
+                .append("number", entity.getNumberOfAnimals())
+                .append("worldref", entity.getWorldRef());
+
         collection.insert(doc);
 
         return true;
@@ -56,8 +55,7 @@ public class SpeciesMongoDao<T extends Species> implements SpeciesDbService<T> {
                         doc.getInt("id"),
                         doc.getString("name"),
                         doc.getInt("number"),
-                        doc.getInt("worldref")
-                );
+                        doc.getInt("worldref"));
 
                 return (T) entity;
             } else {
@@ -66,6 +64,38 @@ public class SpeciesMongoDao<T extends Species> implements SpeciesDbService<T> {
         } finally {
             cursor.close();
         }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public ArrayList<T> readAll() {
+        DBCursor cursor = collection.find();
+
+        ArrayList<Species> results = (ArrayList<Species>) new ArrayList<T>();
+
+        try {
+            while (cursor.hasNext()) {
+                BasicDBObject doc = (BasicDBObject) cursor.next();
+
+                Species entity = new Species(
+                        doc.getInt("id"),
+                        doc.getString("name"),
+                        doc.getInt("number"),
+                        doc.getInt("worldref"));
+
+                results.add(entity);
+            }
+
+            return (ArrayList<T>) results;
+        } finally {
+            cursor.close();
+        }
+    }
+
+    @Override
+    public int getNextId() {
+        int nextId = toIntExact(collection.getCount()) + 1; // getCount palauttaa long
+        return nextId;
     }
 
     @Override

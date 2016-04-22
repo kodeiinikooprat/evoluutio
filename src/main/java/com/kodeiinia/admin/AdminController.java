@@ -60,7 +60,7 @@ public class AdminController {
                 viewObjects.put("resetButtonText", getName(resetDbPath));
                 viewObjects.put("testdataButtonLink", getLink(createTestDataPath));
                 viewObjects.put("testdataButtonText", getName(createTestDataPath));
-                viewObjects.put("templateName", "adminBase.ftl");
+                viewObjects.put("primary", "adminBase.ftl");
                 viewObjects.put("sidebar", "sidebar.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
@@ -77,7 +77,7 @@ public class AdminController {
                 Map<String, Object> viewObjects = new HashMap();
                 String message = "Database has been reset! (possibly)";
                 viewObjects.put("message", message);
-                viewObjects.put("templateName", "adminMessage.ftl");
+                viewObjects.put("primary", "adminMessage.ftl");
                 viewObjects.put("sidebar", "sidebar.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
@@ -97,7 +97,7 @@ public class AdminController {
                 }
 
                 viewObjects.put("message", message);
-                viewObjects.put("templateName", "adminMessage.ftl");
+                viewObjects.put("primary", "adminMessage.ftl");
                 viewObjects.put("sidebar", "sidebar.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }

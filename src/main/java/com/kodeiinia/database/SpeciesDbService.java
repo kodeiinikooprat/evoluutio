@@ -11,4 +11,8 @@ public interface SpeciesDbService<T> {
     public Boolean update(int id, String name, int number);
 
     public Boolean delete(int id);
+    
+    public ArrayList<T> readAll();
+    
+    public int getNextId();
 }

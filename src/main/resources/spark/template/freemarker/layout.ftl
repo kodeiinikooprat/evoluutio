@@ -38,7 +38,7 @@
         <div class="container" role="main">
             <div class="row">
                 <div class="col-md-8">
-            <#include "${templateName}">
+            <#include "${primary}">
                     </div>
 
                 <div class="col-md-4">
