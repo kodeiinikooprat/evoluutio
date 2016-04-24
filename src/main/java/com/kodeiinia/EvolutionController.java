@@ -124,7 +124,7 @@ public class EvolutionController {
             @Override
             public ModelAndView handle(Request request, Response response) {
                 Integer worldId = Integer.parseInt(
-                        request.params(":world"));
+                        request.params(":worldId"));
                 Integer speciesId = Integer.parseInt(
                         request.params(":speciesId"));
 
@@ -132,8 +132,12 @@ public class EvolutionController {
                 World world = worldDbService.readOne(worldId);
                 Species species = speciesDbService.readOne(speciesId);
 
+//                viewObjects.put("noWorld", "No such World!");
+//                viewObjects.put("noSpecies", "No such Species!");
+                viewObjects.put("species", species);
+                viewObjects.put("world", world);
                 viewObjects.put("sidebar", "sidebar_speciesCreator.ftl");
-                viewObjects.put("primary", "world.ftl");
+                viewObjects.put("primary", "species.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
 

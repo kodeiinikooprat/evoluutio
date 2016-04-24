@@ -3,16 +3,20 @@
     <h3>${noWorlds}</h3>
 <#else>
     <h3>${world.getTitle()}</h3>     
-    <h3>${world.getTurn()}</h3>      
+    <h3>turn: ${world.getTurn()}</h3>      
     <#if noSpecies??>
-        <h3>${noSpecies}</h3>
+    <h3>${noSpecies}</h3>
     <#else>
-        <div class="starter-template">
+    <div class="bs-example">
+        <ul class="list-group">
             <#list speciesList as species>
-            <h3>${species.getName()}</h3>
-            <h4>${species.getNumberOfAnimals()}</h4>
+            <li class="list-group-item">
+                <a href="/world/${world.getId()}/species/${species.getId()}">${species.getName()}</a>
+                <span class="badge">${species.getNumberOfAnimals()}</span>
+                </li>
             </#list>
-            </div>
+            </ul>
+        </div>
     </#if>
 </#if>
-</div>
+    </div>

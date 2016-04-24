@@ -61,7 +61,7 @@ public class AdminController {
                 viewObjects.put("testdataButtonLink", getLink(createTestDataPath));
                 viewObjects.put("testdataButtonText", getName(createTestDataPath));
                 viewObjects.put("primary", "adminBase.ftl");
-                viewObjects.put("sidebar", "sidebar.ftl");
+                viewObjects.put("sidebar", "sidebar_admin.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
 
@@ -76,9 +76,13 @@ public class AdminController {
 
                 Map<String, Object> viewObjects = new HashMap();
                 String message = "Database has been reset! (possibly)";
+                viewObjects.put("resetButtonLink", getLink(resetDbPath));
+                viewObjects.put("resetButtonText", getName(resetDbPath));
+                viewObjects.put("testdataButtonLink", getLink(createTestDataPath));
+                viewObjects.put("testdataButtonText", getName(createTestDataPath));
                 viewObjects.put("message", message);
                 viewObjects.put("primary", "adminMessage.ftl");
-                viewObjects.put("sidebar", "sidebar.ftl");
+                viewObjects.put("sidebar", "sidebar_admin.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
         });
@@ -95,10 +99,13 @@ public class AdminController {
                 if (success) {
                     message = "Testdata created.";
                 }
-
+                viewObjects.put("resetButtonLink", getLink(resetDbPath));
+                viewObjects.put("resetButtonText", getName(resetDbPath));
+                viewObjects.put("testdataButtonLink", getLink(createTestDataPath));
+                viewObjects.put("testdataButtonText", getName(createTestDataPath));
                 viewObjects.put("message", message);
                 viewObjects.put("primary", "adminMessage.ftl");
-                viewObjects.put("sidebar", "sidebar.ftl");
+                viewObjects.put("sidebar", "sidebar_admin.ftl");
                 return modelAndView(viewObjects, "layout.ftl");
             }
 

@@ -32,8 +32,6 @@ public class World {
         return this.id;
     }
     
-    
-
     public int getTurn() {
         return this.turn;
     }
