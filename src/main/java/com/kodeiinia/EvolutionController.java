@@ -42,66 +42,32 @@ public class EvolutionController {
             }
         });
 
-//        get(new FreeMarkerRoute("/") {
-//            @Override
-//            public ModelAndView handle(Request request, Response response) {
-//                Map<String, Object> viewObjects = new HashMap();
-//                World world = worldDbService.readOne(1);
-//
-//                if (world != null) {
-//                    viewObjects.put("world", world);
-//
-//                } else {
-//                    viewObjects.put("noWorlds",
-//                            "No worlds present in database!");
-//                }
-//
-//                Species species = speciesDbService.readOne(1);
-//                if (species != null) {
-//                    viewObjects.put("species", species);
-//                } else {
-//                    viewObjects.put("noSpecies",
-//                            "No species present in database!");
-//                }
-//
-//                viewObjects.put("sidebar", "sidebar_speciesCreator.ftl");
-//                viewObjects.put("primary", "world.ftl");
-//                return modelAndView(viewObjects, "layout.ftl");
-//            }
-//        });
-        get(new /*FreeMarker*/Route("/nextturn") {
-            @Override
-            public Object /*ModelAndView*/ handle(Request request, Response response) {
-//                Map<String, Object> viewObjects = new HashMap();
-                World world = worldDbService.readOne(1);
-                Species species = speciesDbService.readOne(1);
-                world.increaseTurn();
-                species.grow();
-                int turn = world.getTurn();
-                int newAmount = species.getNumberOfAnimals();
+        get(new Route("/nextturn") {
+                    @Override
+                    public Object handle(Request request, Response response) {
+                        World world = worldDbService.readOne(1);
+                        ArrayList<Species> speciesList = speciesDbService.readAll();
 
-                worldDbService.update(world.getId(),
-                        turn);
+                        world.increaseTurn();
+                        int turn = world.getTurn();
 
-                speciesDbService.update(species.getId(),
-                        species.getName(),
-                        newAmount);
+                        worldDbService.update(world.getId(),
+                                turn);
 
-//                viewObjects.put("world", world);
-//                viewObjects.put("species", species);
-//
-//                viewObjects.put("sidebar", "sidebar_speciesCreator.ftl");
-//                viewObjects.put("primary", "world.ftl");
+                        for (Species species : speciesList) {
+                            species.grow();
+                            int newAmount = species.getNumberOfAnimals();
+                            speciesDbService.update(species.getId(),
+                                    species.getName(),
+                                    newAmount);
+                        }
 
-//                return modelAndView(viewObjects, "layout.ftl");
+                        response.status(301);
+                        response.redirect("/");
+                        return "";
 
-                response.status(301);
-                response.redirect("/");
-                return "";
-
-                
-            }
-        });
+                    }
+                });
 
         post(new Route("/species/create") {
             @Override
